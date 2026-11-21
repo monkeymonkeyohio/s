@@ -309,9 +309,60 @@
             console.log('%c' + message, style);
         }
 
-               async function InitYSDK() {
+                       async function InitYSDK() {
             try {
                 if (IsLocalHost()) return;
+
+                if (!window.YaGames) {
+                    window.YaGames = {
+                        init: async () => ({
+                            on: () => {},
+                            environment: {
+                                i18n: { lang: "en", tld: "com" },
+                                app: { id: "448583" },
+                                browser: { lang: "en" },
+                                payload: ""
+                            },
+                            deviceInfo: {
+                                type: "desktop",
+                                isMobile: () => false,
+                                isDesktop: () => true,
+                                isTablet: () => false,
+                                isTV: () => false
+                            },
+                            getPlayer: async () => ({
+                                isAuthorized: () => false,
+                                getName: () => "Player",
+                                getPhoto: () => "",
+                                getUniqueID: () => "local_player",
+                                getPayingStatus: () => "unknown",
+                                getData: async () => ({}),
+                                setData: async () => {}
+                            }),
+                            getStorage: async () => window.localStorage,
+                            feedback: {
+                                canReview: async () => ({ value: false })
+                            },
+                            features: {
+                                GamesAPI: { getAllGames: async () => ({ games: [] }) },
+                                LoadingAPI: { ready: () => {} },
+                                GameplayAPI: { start: () => {}, stop: () => {} }
+                            },
+                            shortcut: {
+                                canShowPrompt: async () => ({ canShow: false })
+                            },
+                            getFlags: async () => ({}),
+                            adv: {
+                                showFullscreenAdv: (opts) => opts?.callbacks?.onClose?.(false),
+                                showRewardedVideo: (opts) => opts?.callbacks?.onClose?.()
+                            },
+                            getLeaderboards: async () => ({
+                                getLeaderboardEntries: async () => ({ entries: [] }),
+                                setLeaderboardScore: async () => {}
+                            })
+                        })
+                    };
+                }
 
                 ysdk = await YaGames.init();
                 ysdk.on('game_api_pause', PauseCallback);
@@ -379,6 +430,7 @@ LogStyledMessage('Init Flags ysdk');
             if (!IsLocalHost() && !syncInit)
                 StartUnityInstance_IfUnloaded();
         }
+
 
 
         function InitGame() {
