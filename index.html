@@ -786,7 +786,20 @@ var environmentData = NO_DATA;
 function RequestingEnvironmentData() {
     return new Promise((resolve) => {
         if (ysdk == null) {
-            Final(NO_DATA);
+            Final(JSON.stringify({
+                "language": "en",
+                "domain": "com",
+                "deviceType": "desktop",
+                "isMobile": false,
+                "isDesktop": true,
+                "isTablet": false,
+                "isTV": false,
+                "appID": "448583",
+                "browserLang": "en",
+                "payload": "",
+                "platform": navigator.platform,
+                "browser": "Chrome"
+            }));
             return;
         }
         try {
@@ -838,6 +851,7 @@ function RequestingEnvironmentData() {
         }
     });
 }
+
 
 var playerData = NO_DATA;
 let player = null;
