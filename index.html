@@ -309,7 +309,7 @@
             console.log('%c' + message, style);
         }
 
-        async function InitYSDK() {
+               async function InitYSDK() {
             try {
                 if (IsLocalHost()) return;
 
@@ -353,11 +353,33 @@ LogStyledMessage('Init Flags ysdk');
 
             } catch (e) {
                 console.error('CRASH Initialization SDK: ', e);
+                environmentData = JSON.stringify({
+                    language: "en",
+                    domain: "com",
+                    deviceType: "desktop",
+                    isMobile: false,
+                    isDesktop: true,
+                    isTablet: false,
+                    isTV: false,
+                    appID: "448583",
+                    browserLang: "en",
+                    payload: "",
+                    platform: navigator.platform,
+                    browser: "Chrome"
+                });
+                playerData = NotAuthorized(false);
+                cloudSaves = NO_DATA;
+                YG2Instance('SetEnvirData', environmentData);
+                YG2Instance('SetAuth', playerData);
+                YG2Instance('SetLoadSaves', cloudSaves);
+                initYSDK = true;
+                SendInitSDKComplete();
             }
 
             if (!IsLocalHost() && !syncInit)
                 StartUnityInstance_IfUnloaded();
         }
+
 
         function InitGame() {
             initGame = true;
