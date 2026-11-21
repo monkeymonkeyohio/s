@@ -781,7 +781,20 @@ function GetFlags() {
     });
 }
 
-var environmentData = NO_DATA;
+var environmentData = JSON.stringify({
+    "language": "en",
+    "domain": "com",
+    "deviceType": "desktop",
+    "isMobile": false,
+    "isDesktop": true,
+    "isTablet": false,
+    "isTV": false,
+    "appID": "448583",
+    "browserLang": "en",
+    "payload": "",
+    "platform": navigator.platform,
+    "browser": "Chrome"
+});
 
 function RequestingEnvironmentData() {
     return new Promise((resolve) => {
