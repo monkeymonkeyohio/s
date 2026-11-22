@@ -313,7 +313,7 @@
             try {
                 if (IsLocalHost()) return;
 
-                if (!window.YaGames) {
+                if (!window.location.hostname.includes('yandex')) {
                     window.YaGames = {
                         init: async () => ({
                             on: () => {},
